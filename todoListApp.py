@@ -1,34 +1,3 @@
-# To-Do List APP
-# user_prompt = "Enter a todo: "
-# text = input(user_prompt)
-# print(text)
-
-# user_prompt = "Enter a todo: "
-# todo1 = input(user_prompt)
-# todo2 = input(user_prompt)
-# todo3 = input(user_prompt)
-
-# todos = [todo1, todo2,todo3, "Hello"]
-# print(todos)
-
-# print(type(todos))
-# print(type(todo1))
-
-# user_prompt = "Enter a todo: "
-# while True:
-#     todo = input(user_prompt)
-#     print(todo)
-#     print("Next...")
-
-# user_prompt = "Enter a todo: "
-# todos = []
-
-# while True:
-#     todo = input(user_prompt)
-#     print(todo.capitalize())
-#     todos.append(todo)
-#     print(todos)
-
 # Tạo list rỗng để chứa các todo sẽ nhập sau đó
 
 todos = []
