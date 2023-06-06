@@ -31,7 +31,7 @@
 
 # Tạo list rỗng để chứa các todo sẽ nhập sau đó
 
-todos = []
+# todos = []
 #Sử vòng lặp True để lặp liên tục
 
 while True:
@@ -41,11 +41,27 @@ while True:
 # Người dùng chỉ được nhập các action theo gợi ý, nếu khác thì sẽ hiện warning
     match user_action:
         case 'add' :
-            todo= input("Enter a todo:")
+            todo= input("Enter a todo:")+"\n"
+# input nhập vào được ghi vào file todos.txt
+            file = open(r"D:\60daysPython\Day1\Day2\todos.txt", "r")
+            todos = file.readlines()
+            file.close()
+
             todos.append(todo)
+
+            file = open(r"D:\60daysPython\Day1\Day2\todos.txt", "w")
+            file.writelines(todos)
+            file.close()
         case 'show':
+            file = open(r"D:\60daysPython\Day1\Day2\todos.txt", "r")
+            todos = file.readlines()
+            file.close()
+
+            # new_todos = [item.strip("\n") for item in todos]
+            
             for index, item in enumerate(todos):  # tạo thứ tự cho list todo đã nhập vô
                 item = item.title()
+                item =item.strip("\n")
                 row = f"{index+1}-{item}"
                 print(row)
         case 'edit':
