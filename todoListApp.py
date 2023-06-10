@@ -1,50 +1,83 @@
 # To-Do List APP
-# Tạo list rỗng để chứa các todo sẽ nhập sau đó
-
-# todos = []
 #Sử vòng lặp True để lặp liên tục
+
+import functions
 
 while True:
     user_action = input("Type add, show,edit, complete or exit: ")
     user_action = user_action.strip() # loại bỏ khoảng trắng
 
 # Người dùng chỉ được nhập các action theo gợi ý, nếu khác thì sẽ hiện warning
-    match user_action:
-        case 'add' :
-            todo= input("Enter a todo:")+"\n"
-# input nhập vào được ghi vào file todos.txt
-            file = open(r"D:\60daysPython\Day1\Day2\todos.txt", "r")
-            todos = file.readlines()
-            file.close()
+    if user_action.startswith("add"):
+        todo = user_action[4:]
 
-            todos.append(todo)
+        todos = functions.get_todos()
+        todos.append(todo+ "\n")
 
-            file = open(r"D:\60daysPython\Day1\Day2\todos.txt", "w")
-            file.writelines(todos)
-            file.close()
-        case 'show':
-            file = open(r"D:\60daysPython\Day1\Day2\todos.txt", "r")
-            todos = file.readlines()
-            file.close()
+# cách khác ghi file không cần close file
 
-            # new_todos = [item.strip("\n") for item in todos]
-            
-            for index, item in enumerate(todos):  # tạo thứ tự cho list todo đã nhập vô
-                item = item.title()
-                item =item.strip("\n")
-                row = f"{index+1}-{item}"
-                print(row)
-        case 'edit':
-            number = int(input("Number of the todo to edit: "))
+        functions.write_todos(todos)
+
+
+    elif user_action.startswith("show"):
+
+        # with open(r"D:\60daysPython\Day1\Day2\todos.txt", "r") as file:
+        #     todos = file.readlines()
+        todos = functions.get_todos()
+        
+        # new_todos = [item.strip("\n") for item in todos]
+        
+        for index, item in enumerate(todos):  # tạo thứ tự cho list todo đã nhập vô
+            item = item.title()
+            item =item.strip("\n")
+            row = f"{index + 1}-{item}"
+            print(row)
+
+    elif user_action.startswith("edit"):
+        try:
+            number = int(user_action[5:])
+            print(number)
+
             number = number -1
+
+            # with open(r"D:\60daysPython\Day1\Day2\todos.txt", "r") as file:
+            #     todos =file.readlines()
+            todos = functions.get_todos()
+
             new_todo =input("Enter new todo: ")
-            todos[number] = new_todo
-        case 'complete':
-            number = int(input("Number of the todo to complete: "))
-            todos.pop(number-1)
-        case 'exit':
-            break
-        case whatever:
-            print("\t Hey, you entered unknown command")
+            todos[number] = new_todo + "\n"
+            
+            functions.write_todos(todos)
+        
+        except ValueError:
+            print("Your command is not valid")
+            continue
+
+    
+    elif user_action.startswith("complete"):
+        try:
+            number = int(user_action[9:])
+
+            # with open(r"D:\60daysPython\Day1\Day2\todos.txt", "r") as file:
+            #     todos =file.readlines()
+            todos = functions.get_todos()
+
+            index = number - 1
+            todo_to_remove = todos[index].strip("\n")
+            todos.pop(index)
+
+            functions.write_todos(todos)
+
+            message = f"Todo - {todo_to_remove} - was removed from the list."
+            print(message)
+        except IndexError:
+            print("There is no item with that number")
+            continue
+
+    elif user_action.startswith("exit"):
+        break
+
+    else:
+        print(" Command is not valid. Enter action again")
 # Chọn exit thì thoát chtr và in Bye
 print("Bye")
